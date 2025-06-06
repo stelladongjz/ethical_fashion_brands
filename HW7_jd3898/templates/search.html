@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h1 class="search-title">Search Results for "{{ query }}"</h1>
+    {% if results|length > 0 %}
+      <p class="result-count">Found {{ results|length }} result{{ results|length > 1 and 's' or '' }}.</p>
+      <ul class="search-list">
+        {% for item in results %}
+          <li class="search-item">
+            <a href="{{ url_for('view', id=item['id']) }}" class="search-item-title">{{ item['title']|highlight(query) }}</a>
+            <p class="search-item-founders">Founder:
+              {% if item.founders is iterable and item.founders is not string %}
+                {% for founder in item.founders %}
+                  <span class="founder-name">{{ founder|highlight(query) }}</span>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+              {% else %}
+                <span class="founder-name">{{ item.founders|highlight(query) }}</span>
+              {% endif %}
+            </p>
+            <p class="search-item-categories">Categories:
+              {% if item.categories is iterable and item.categories is not string %}
+                {% for category in item.categories %}
+                  <a href="{{ url_for('category', category_name=category) }}" class="category-link">
+                    {{ category|highlight(query) }}
+                  </a>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+              {% else %}
+                <a href="{{ url_for('category', category_name=item.categories) }}" class="category-link">
+                  {{ item.categories|highlight(query) }}
+                </a>
+              {% endif %}
+            </p>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No results found.</p>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
+{% endblock %}

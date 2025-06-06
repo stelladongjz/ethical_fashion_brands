@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Edit {{ item.title }}{% endblock %}
+
+{% block content %}
+  <h2>Edit Item</h2>
+  <form id="edit-form" method="post" data-id="{{ item.id }}">
+    <div class="mb-3">
+      <label for="title">Title</label>
+      <input name="title" id="title" value="{{ item.title }}" class="form-control">
+      {% if errors.title %}
+        <span class="error text-danger">{{ errors.title }}</span>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label for="founders">Founder</label>
+      <input name="founders" id="founders" value="{{ item.founders }}" class="form-control">
+      {% if errors.founders %}
+        <span class="error text-danger">{{ errors.founders }}</span>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label for="age_group">Targeted Age Group</label>
+      <input name="age_group" id="age_group" value="{{ item.age_group }}" class="form-control">
+      {% if errors.age_group %}
+        <span class="error text-danger">{{ errors.age_group }}</span>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label for="price_range">Price Range</label>
+      <input name="price_range" id="price_range" value="{{ item.price_range }}" class="form-control">
+      {% if errors.price_range %}
+        <span class="error text-danger">{{ errors.price_range }}</span>
+      {% endif %}
+    </div>
+
+    <div>
+      <label for="summary">Summary</label>
+      <textarea id="summary" name="summary" class="form-control">{{ item.summary }}</textarea>
+      {% if errors.get('summary') %}
+          <span class="error">{{ errors['summary'] }}</span>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label for="categories">Categories</label>
+      <input name="categories" id="categories" value="{{ item['categories']|join(', ') }}" class="form-control">
+      {% if errors.categories %}
+        <span class="error text-danger">{{ errors.categories }}</span>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label for="image">Image URL</label>
+      <input name="image" id="image" value="{{ item.image }}" class="form-control">
+      {% if errors.image %}
+        <span class="error text-danger">{{ errors.image }}</span>
+      {% endif %}
+    </div>
+
+    <button type="submit" class="btn custom-btn">Submit</button>
+
+    <!-- Discard Changes Dialog -->
+    <div id="dialog" title="Discard Changes">
+      <p>Are you sure you want to discard the changes?</p>
+    </div>
+
+    <!-- Discard Changes Button -->
+    <button type="button" id="discard-btn" class="btn btn-secondary" onclick="if(confirm('Are you sure you want to discard the changes?')) window.location.href='/view/{{ item.id }}';">Discard Changes</button>
+  </form>
+
+
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
+{% endblock %}

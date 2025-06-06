@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block scripts %}
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
+{% endblock %}
+
+{% block title %}Add New Item{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Add New Item</h2>
+
+    {% if success %}
+    <div id="message" class="alert alert-success">
+        New item successfully created. <a href="{{ url_for('view', id=new_id) }}">See it here</a>.
+    </div>
+    {% endif %}
+
+    <form id="add-form" method="post">
+        <div class="mb-3">
+            <label for="title">Title</label>
+            <input name="title" id="title" placeholder="Title" class="form-control">
+            <span class="error-message text-danger">{{ errors.get('title', '') }}</span>
+        </div>
+
+        <div class="mb-3">
+            <label for="age_group">Targeted Age Group</label>
+            <input name="age_group" id="age_group" placeholder="Age Group" class="form-control">
+            <span class="error-message text-danger">{{ errors.get('age_group', '') }}</span>
+        </div>
+
+        <div class="mb-3">
+            <label for="summary">Summary</label>
+            <textarea name="summary" id="summary" placeholder="Summary" class="form-control"></textarea>
+            <span class="error-message text-danger">{{ errors.get('summary', '') }}</span>
+        </div>
+
+        <div class="mb-3">
+            <label for="founders">Founders</label>
+            <input name="founders" id="founders" placeholder="Founders" class="form-control">
+            <span class="error-message text-danger">{{ errors.get('founders', '') }}</span>
+        </div>
+
+        <div class="mb-3">
+            <label for="price_range">Price Range</label>
+            <input name="price_range" id="price_range" placeholder="Price Range" class="form-control">
+            <span class="error-message text-danger">{{ errors.get('price_range', '') }}</span>
+        </div>
+
+        <div class="mb-3">
+            <label for="categories">Categories</label>
+            <input name="categories" id="categories" placeholder="Categories" class="form-control">
+            <span class="error-message text-danger">{{ errors.get('categories', '') }}</span>
+        </div>
+
+        <div class="mb-3">
+            <label for="image">Image URL</label>
+            <input name="image" id="image" placeholder="Image URL" class="form-control">
+            <span class="error-message text-danger">{{ errors.get('image', '') }}</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

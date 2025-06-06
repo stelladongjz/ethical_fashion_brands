@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="text-center">Discover eco-friendly fashion brands</h1>
+        </div>
+        <h2 class="mb-3">Popular Now</h2>
+    </div>
+
+
+    <div class="row">
+        {% for item in popular_items %}
+        <div class="col-md-4 col-sm-6 mb-5">
+            <div class="brand-item">
+                <a href="{{ url_for('view', id=item.id) }}">
+                    <img src="{{ item.image }}" alt="{{ item.title }}" class="home-image mb-3">
+                </a>
+                <h5 href="{{ url_for('view', id=item['id']) }}">{{ item['title'] }}</h5>
+                <p class="brand-price">{{ item.price_range }}</p>
+                <p class="brand-categories">
+                    {% for category in item.categories %}
+                        <a href="{{ url_for('category', category_name=category.strip()) }}" class="category-tag-home">{{ category }}</a>
+                    {% endfor %}
+                </p>
+                <a href="{{ url_for('view', id=item.id) }}" class="btn custom-btn">View More</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div id="popular-items-data" style="display:none;">{{ popular_items | tojson }}</div>
+
+</div>
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='popular-items.js') }}"></script>
+{% endblock %}
+{% endblock %}

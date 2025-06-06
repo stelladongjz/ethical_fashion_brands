@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}{{ item.title }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-left">
+            <h1>{{ item.title }}</h1>
+            <img src="{{ item.image }}" alt="Image of {{ item.title }} - {{ item.summary[:50] }}" class="brand-image">
+        </div>
+        
+        <div class="col-right">
+            <div class="brand-info">
+                <p>Founder: <strong>{{ item.founders  }}</strong></p>
+                <p>Target Age Group: <strong>{{ item.age_group }}</strong></p>
+                <p>Price Range: <strong>{{ item.price_range }}</strong></p>
+            </div>
+
+            <div class="brand-summary">
+                <p>{{ item.summary }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="categories-and-brands">
+        <div class="categories">
+            <h4>Categories</h4>
+            <div class="category-list">
+                {% for category in item.categories %}
+                    <a href="{{ url_for('category', category_name=category.strip()) }}" class="category-tag">{{ category }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="similar-brands">
+            <h4>Similar Brands</h4>
+            <div class="category-list">
+                {% for brand in relevant_brands %}
+                    <a href="/view/{{ brand.id }}" class="category-tag">{{ brand.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="action-buttons">
+        <a href="/" class="btn second-btn">Back</a>
+        <a href="{{ url_for('edit', id=item.id) }}" class="btn second-btn">Edit</a>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
+{% endblock %}

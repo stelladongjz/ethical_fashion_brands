@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Brands in {{ category_name }}{% endblock %}
+
+{% block content %}
+
+<h3 style="text-align: center;">Brands in "{{ category_name }}"</h3>
+
+<div class="container">
+    {% if items %}
+        {% for item in items %}
+            <div class="row">
+
+                <div class="col-right-category">
+                    <h3 class="brand-category-title">
+                        <a href="{{ url_for('view', id=item.id) }}">{{ item.title }}</a>
+                    </h3>
+
+                    <p class="brand-category-price"><strong>Price Range:</strong> {{ item.price_range }}</p>
+
+                    <p class="brand-category-categories"><strong>Categories:</strong>
+                        {% for category in item.categories %}
+                            <a href="{{ url_for('category', category_name=category.strip()) }}">{{ category }}</a>{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No brands found in this category.</p>
+    {% endif %}
+
+</div>
+
+
+<a href="/" class="btn second-btn bottom-btn">Back to Home</a>
+
+
+
+{% endblock %}
+{% block scripts %}
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
+{% endblock %}
